@@ -38,7 +38,7 @@ import torch.nn.functional as F
 import torchaudio
 from pyannote.core import Segment
 from torch import Tensor
-
+import librosa
 torchaudio.set_audio_backend("soundfile")
 
 AudioFile = Union[Text, Path, IOBase, Mapping]
@@ -398,7 +398,8 @@ class Audio:
                 )
 
                 warnings.warn(msg)
-                waveform, sample_rate = self.__call__(file)
+                #waveform, sample_rate = self.__call__(file)
+                waveform, sample_rate = librosa.load(file, sr=16_000)
                 data = waveform[:, start_frame:end_frame]
 
                 # storing waveform and sample_rate for next time
