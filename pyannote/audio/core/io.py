@@ -275,7 +275,8 @@ class Audio:
             sample_rate = file["sample_rate"]
 
         elif "audio" in file:
-            waveform, sample_rate = torchaudio.load(file["audio"])
+            waveform, sample_rate = librosa.load(file["audio"], sr=16_000)
+            #waveform, sample_rate = torchaudio.load(file["audio"])
 
         channel = file.get("channel", None)
 
@@ -398,8 +399,8 @@ class Audio:
                 )
 
                 warnings.warn(msg)
-                #waveform, sample_rate = self.__call__(file)
-                waveform, sample_rate = librosa.load(file, sr=16_000)
+                waveform, sample_rate = self.__call__(file)
+#                 waveform, sample_rate = librosa.load(file, sr=16_000)
                 data = waveform[:, start_frame:end_frame]
 
                 # storing waveform and sample_rate for next time
